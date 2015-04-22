@@ -1,0 +1,30 @@
+#include<stdio.h>
+
+int main()
+{
+	int n,m,sum;
+	while(1)
+	{
+		scanf("%d",&n);
+		if(n==0)
+			break;
+		sum=0;
+		while(n-->0)
+		{
+			scanf("%d",&m);
+			sum+=m/100;
+			m%=100;
+			sum+=m/50;
+			m%=50;
+			sum+=m/10;
+			m%=10;
+			sum+=m/5;
+			m%=5;
+			sum+=m/2;
+			m%=2;
+			sum+=m;	
+		}
+		printf("%d\n",sum);
+	}
+	return 0;
+}

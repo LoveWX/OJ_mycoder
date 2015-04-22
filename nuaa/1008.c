@@ -1,0 +1,60 @@
+#include<stdio.h>
+
+int main()
+{
+	int h[100],next1[100],next2[100],i,j,k,n,flag;
+	while(scanf("%d",&n)!=EOF)
+	{
+		if(n==2)
+		{
+			scanf("%d",&n);
+			scanf("%d",&n);
+			printf("0\n");
+			continue;
+		}
+		for(i=0;i<n;i++)
+			scanf("%d",&h[i]);
+		next1[0]=1;
+		next2[n-1]=1;
+		for(i=1;i<n;i++)
+		{
+			flag=0;
+			k=0;
+			for(j=0;j<i;j++)
+				if(h[j]<h[i]&&next1[j]>=next1[k])
+				{
+					flag=1;
+					k=j;
+				}
+			if(flag==1)
+				next1[i]=next1[k]+1;
+			else
+				next1[i]=1;
+		}
+		for(i=n-2;i>=0;i--)
+		{
+			flag=0;
+			k=n-1;
+			for(j=n-1;j>i;j--)
+				if(h[j]<h[i]&&next2[j]>=next2[k])
+				{
+					flag=1;
+					k=j;
+				}
+			if(flag==1)
+				next2[i]=next2[k]+1;
+			else
+				next2[i]=1;
+		}
+		next1[0]+=next2[0];
+		k=0;
+		for(i=1;i<n;i++)
+		{
+			next1[i]+=next2[i];
+			if(next1[i]>next1[k])
+				k=i;
+		}
+		printf("%d\n",n-next1[k]+1);
+	}
+	return 0;
+}

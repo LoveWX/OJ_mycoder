@@ -1,0 +1,67 @@
+#include<stdio.h>
+#define M 1000
+int main()
+{
+	int i,j,k,len=0,max,flag;
+	int w[M],s[M],l[M],p[M]={0},n[M];
+	while(scanf("%d%d",&w[len],&s[len])!=EOF)
+		len++;
+	for(i=0;i<len;i++)
+		n[i]=i;
+	for(i=0;i<len;i++)
+	{
+		l[i]=1;
+		k=i;
+		for(j=i+1;j<len;j++)
+			if(w[j]<w[k]||(w[j]==w[k]&&s[j]>s[k]))
+				k=j;
+		if(k!=i)
+		{
+			j=w[i];
+			w[i]=w[k];
+			w[k]=j;
+			j=s[i];
+			s[i]=s[k];
+			s[k]=j;
+			j=n[i];
+			n[i]=n[k];
+			n[k]=j;
+		}
+	}
+	for(i=1;i<len;i++)
+	{
+		k=0;
+		max=l[0];
+		flag=0;
+		for(j=0;j<i;j++)
+			if(w[j]!=w[i]&&s[j]>s[i]&&l[j]>=max)
+			{
+				k=j;
+				max=l[j];
+				flag=1;
+			}
+		if(flag==1)
+		{
+			l[i]=max+1;
+			p[i]=k;
+		}
+	}
+	max=1;
+	k=0;
+	for(i=1;i<len;i++)
+		if(l[i]>max)
+		{
+			k=i;
+			max=l[i];
+		}
+	printf("%d\n",max);
+	len=0;
+	while(max-->0)
+	{
+		w[len++]=n[k];
+		k=p[k];
+	}
+	for(i=len-1;i>=0;i--)
+		printf("%d\n",w[i]+1);
+	return 0;
+}
